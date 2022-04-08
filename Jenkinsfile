@@ -20,6 +20,15 @@ pipeline {
             }
           }
         }
+        stage('Secret Scan') {
+          steps {
+            container('trufflehog') {
+              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                  sh "trufflehog --exclude_paths secrets-exclude.txt ${GIT_URL}"
+              }
+            }
+          }
+        }
       }
     }
     stage('Build') {

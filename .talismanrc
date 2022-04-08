@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: creds.txt
+  checksum: df8b32cb912f2577f350e12c9f9386e62858909d1090dd8ecf6e6084f8791b83
+version: ""
