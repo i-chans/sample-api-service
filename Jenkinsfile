@@ -20,20 +20,18 @@ pipeline {
             }
           }
         }
+        stage('Dependency Tree') {
+          steps {
+            container('dependency') {
+              sh "mvn dependency:tree"
+            }
+          }
+        }
         stage('Secret Scan') {
           steps {
             container('trufflehog') {
               catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                   sh "trufflehog --exclude_paths secrets-exclude.txt ${GIT_URL}"
-              }
-            }
-          }
-        }
-        stage('Dependency Tree') {
-          steps {
-            container('dependency') {
-              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
-                  sh "mvn dependency:tree"
               }
             }
           }
