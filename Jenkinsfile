@@ -29,6 +29,15 @@ pipeline {
             }
           }
         }
+        stage('Dependency Tree') {
+          steps {
+            container('dependency') {
+              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                  sh "mvn dependency:tree"
+              }
+            }
+          }
+        }
       }
     }
     stage('Build') {
